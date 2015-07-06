@@ -8,7 +8,7 @@ import xlrd
 import xlwt
 import socket
 # »ñÈ¡ÍøÒ³ÄÚÈİ
-print 'test'
+
 r = requests.get("http://cnp/SitePages/Default3.aspx",auth=HttpNtlmAuth('domain\\p135036','~1qaz2wsx'))
 data = r.text
 soup = BeautifulSoup(data)

@@ -1,4 +1,4 @@
-# coding:utf-8
+# coding:GBK
 import re
 import itertools
 import requests
@@ -28,6 +28,5 @@ for url in link_list:
 		print url.get_text().encode('gb18030'),url.get('href')
 		sheet.write(i,0,url.get_text().encode('gb18030'))
 		sheet.write(i,1,url.get('href'))
-		sheet.write(i,2,socket.gethostbyname(url.get('href')))
 		i = i+1
 wbk.save('test.xls')

@@ -7,8 +7,8 @@ from bs4 import BeautifulSoup
 import xlrd
 import xlwt
 import socket
+import urlparse
 # »ñÈ¡ÍøÒ³ÄÚÈİ
-
 r = requests.get("http://cnp/SitePages/Default3.aspx",auth=HttpNtlmAuth('domain\\p135036','~1qaz2wsx'))
 data = r.text
 soup = BeautifulSoup(data)
@@ -25,8 +25,10 @@ for url in link_list:
 		print "error"
 		exit()
 	else:
-		print url.get_text().encode('gb18030'),url.get('href')
+		owner = urlparse.urlsplit(url.get('href'))
+		print url.get_text().encode('gb18030'),url.get('href'),owner.netloc.split(':')[0]
 		sheet.write(i,0,url.get_text().encode('gb18030'))
 		sheet.write(i,1,url.get('href'))
+		sheet.write(i,2,socket.gethostbyname(owner.netloc.split(':')[0]))
 		i = i+1
 wbk.save('test.xls')

@@ -8,14 +8,13 @@ import xlrd
 import xlwt
 import socket
 import urlparse
-# 获取网页内容
+#鑾峰彇缃戦〉鍐呭
 r = requests.get("http://cnp/SitePages/Default3.aspx",auth=HttpNtlmAuth('domain\\p135036','~1qaz2wsx'))
 data = r.text
 soup = BeautifulSoup(data)
 tmp = soup.find('div',attrs ={'class':"menuwrp"})
 link_list = tmp.find_all('a')
-# 利用正则查找所有连接
-#link_list =re.findall(r"(?<=href=\").+?(?=\")|(?<=href=\').+?(?=\')" ,data)
+
 wbk = xlwt.Workbook(encoding='gb18030')
 sheet = wbk.add_sheet('sheet 1')
 wbk.save('test.xls')
@@ -25,10 +24,12 @@ for url in link_list:
 		print "error"
 		exit()
 	else:
+	#鍒嗗壊URL
 		owner = urlparse.urlsplit(url.get('href'))
 		print url.get_text().encode('gb18030'),url.get('href'),owner.netloc.split(':')[0]
 		sheet.write(i,0,url.get_text().encode('gb18030'))
 		sheet.write(i,1,url.get('href'))
+	#鑾峰彇涓绘満IP鍦板潃
 		sheet.write(i,2,socket.gethostbyname(owner.netloc.split(':')[0]))
 		i = i+1
 wbk.save('test.xls')

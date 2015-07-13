@@ -1,4 +1,4 @@
-# coding:GBK
+#-*- coding:gb18030 -*-
 import re
 import itertools
 import requests
@@ -9,12 +9,10 @@ import xlwt
 import socket
 import urlparse
 #获取网页内容
-r = requests.get("http://cnp/SitePages/Default3.aspx",auth=HttpNtlmAuth('domain\\p135036','~1qaz2wsx'))
-data = r.text
-soup = BeautifulSoup(data)
-tmp = soup.find('div',attrs ={'class':"menuwrp"})
-link_list = tmp.find_all('a')
+import pagetaglist
+from pagetaglist import gettaglist
 
+link_list = gettaglist("http://cnp/SitePages/Default3.aspx",'div','a',{'class':"menuwrp"})
 wbk = xlwt.Workbook(encoding='gb18030')
 sheet = wbk.add_sheet('sheet 1')
 wbk.save('test.xls')
